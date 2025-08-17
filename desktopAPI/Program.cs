@@ -1,37 +1,49 @@
+using desktopAPI.Services;
 using Microsoft.EntityFrameworkCore;
+
 namespace desktopAPI
 {
     internal static class Program
     {
-        /// <summary>
-        ///  The main entry point for the application.
-        /// </summary>        [STAThread]
+        [STAThread]
         static void Main()
         {
-            // To customize application configuration such as set high DPI settings or default font,
-            // see https://aka.ms/applicationconfiguration.
+
+            AllocConsole();
             ApplicationConfiguration.Initialize();
-            
+
             // Initialize logging system
             Logging.Initialize();
             Logging.LogUserAction("Application", "Application started", "Desktop API application starting up");
-            
+
             try
             {
-                // Start with login form
-                Logging.LogUserAction("Application", "Starting login process", "Showing Form4 for user authentication");
-                Application.Run(new Form4());
+                ApplicationConfiguration.Initialize();                
+                // Just run Form4 as the main application
+                Application.Run(new Login());
             }
             catch (Exception ex)
             {
                 Logging.LogError("Application", "Application error", ex, "Unhandled exception in main application loop");
+                MessageBox.Show($"An unexpected error occurred: {ex.Message}", "Application Error",
+                              MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             finally
             {
+                // Clean up authentication tokens
+                AuthApiService.ClearTokens();
+
                 // Shutdown logging
                 Logging.LogUserAction("Application", "Application shutting down", "Normal application exit");
                 Logging.Shutdown();
+
+                FreeConsole();
             }
         }
+        [System.Runtime.InteropServices.DllImport("kernel32.dll")]
+        private static extern bool AllocConsole();
+
+        [System.Runtime.InteropServices.DllImport("kernel32.dll")]
+        private static extern bool FreeConsole();
     }
 }

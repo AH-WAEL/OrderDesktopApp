@@ -2,11 +2,10 @@
   "profiles": {
     "reciever": {
       "commandName": "Project",
-      "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
-      "applicationUrl": "https://localhost:8543;http://localhost:8544"
+      "applicationUrl": "https://localhost:50001;http://localhost:50002"
     }
   }
 }

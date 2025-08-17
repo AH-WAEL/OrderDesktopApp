@@ -10,7 +10,7 @@ namespace desktopAPI
     public partial class Form3 : Form
     {
         private HubConnection _hubConnection;
-        private BindingList<order> _messages = new BindingList<order>();        public Form3()
+        private BindingList<Order> _messages = new BindingList<Order>();        public Form3()
         {
             InitializeComponent();
             Logging.LogUserAction("Navigation", "Form3 (Live Stream) opened", "SignalR live stream form initialized");
@@ -47,7 +47,7 @@ namespace desktopAPI
                     {
                         Logging.LogUserAction("SignalR", "Message received from hub", $"Message length: {message?.Length ?? 0}");
                         
-                        var orderMessage = JsonSerializer.Deserialize<order>(message);
+                        var orderMessage = JsonSerializer.Deserialize<Order>(message);
                         if (orderMessage != null)
                         {
                             Logging.LogUserAction("Data", "Order message processed", $"Order ID: {orderMessage.Id}, Item: {orderMessage.Item}");
@@ -97,7 +97,7 @@ namespace desktopAPI
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
-        }        private void AddOrderSafely(order orderMessage)
+        }        private void AddOrderSafely(Order orderMessage)
         {
             try
             {
