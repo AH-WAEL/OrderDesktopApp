@@ -9,6 +9,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "reciever", "reciever\reciev
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "first", "..\first\first\first.csproj", "{94EAFC33-EC4B-6614-72E0-87181D0DE7A6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthWebapi", "AuthWebapi\AuthWebapi.csproj", "{052F3FB3-D284-3F88-9233-BC3C9EADFF77}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Productapi", "Product api\Productapi.csproj", "{98A1E9E3-A550-4279-9CF9-CC151C3AA702}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +31,14 @@ Global
 		{94EAFC33-EC4B-6614-72E0-87181D0DE7A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{94EAFC33-EC4B-6614-72E0-87181D0DE7A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{94EAFC33-EC4B-6614-72E0-87181D0DE7A6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{052F3FB3-D284-3F88-9233-BC3C9EADFF77}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{052F3FB3-D284-3F88-9233-BC3C9EADFF77}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{052F3FB3-D284-3F88-9233-BC3C9EADFF77}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{052F3FB3-D284-3F88-9233-BC3C9EADFF77}.Release|Any CPU.Build.0 = Release|Any CPU
+		{98A1E9E3-A550-4279-9CF9-CC151C3AA702}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{98A1E9E3-A550-4279-9CF9-CC151C3AA702}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{98A1E9E3-A550-4279-9CF9-CC151C3AA702}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{98A1E9E3-A550-4279-9CF9-CC151C3AA702}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,6 +1,6 @@
 ﻿namespace desktopAPI
 {
-    partial class Form4
+    partial class Login
     {
         /// <summary>
         /// Required designer variable.
@@ -34,6 +34,9 @@
             textBox2 = new TextBox();
             label2 = new Label();
             label3 = new Label();
+            label4 = new Label();
+            button2 = new Button();
+            checkBox1 = new CheckBox();
             SuspendLayout();
             // 
             // label1
@@ -44,11 +47,10 @@
             label1.Size = new Size(46, 20);
             label1.TabIndex = 0;
             label1.Text = "Login";
-            label1.Click += label1_Click;
             // 
             // button1
             // 
-            button1.Location = new Point(153, 244);
+            button1.Location = new Point(151, 232);
             button1.Name = "button1";
             button1.Size = new Size(94, 29);
             button1.TabIndex = 1;
@@ -79,7 +81,6 @@
             label2.Size = new Size(73, 20);
             label2.TabIndex = 4;
             label2.Text = "username";
-            label2.Click += label2_Click;
             // 
             // label3
             // 
@@ -90,19 +91,52 @@
             label3.TabIndex = 5;
             label3.Text = "password";
             // 
-            // Form4
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Location = new Point(62, 302);
+            label4.Name = "label4";
+            label4.Size = new Size(167, 20);
+            label4.TabIndex = 6;
+            label4.Text = "Don't have an account? ";
+            // 
+            // button2
+            // 
+            button2.Location = new Point(250, 300);
+            button2.Name = "button2";
+            button2.Size = new Size(78, 29);
+            button2.TabIndex = 7;
+            button2.Text = "Register";
+            button2.UseVisualStyleBackColor = true;
+            button2.Click += button2_Click;
+            // 
+            // checkBox1
+            // 
+            checkBox1.AutoSize = true;
+            checkBox1.Location = new Point(280, 177);
+            checkBox1.Name = "checkBox1";
+            checkBox1.Size = new Size(132, 24);
+            checkBox1.TabIndex = 8;
+            checkBox1.Text = "Show Password";
+            checkBox1.UseVisualStyleBackColor = true;
+            checkBox1.CheckedChanged += checkBox1_CheckedChanged;
+            // 
+            // Login
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(407, 343);
+            Controls.Add(checkBox1);
+            Controls.Add(button2);
+            Controls.Add(label4);
             Controls.Add(label3);
             Controls.Add(label2);
             Controls.Add(textBox2);
             Controls.Add(textBox1);
             Controls.Add(button1);
             Controls.Add(label1);
-            Name = "Form4";
-            Text = "Form4";
+            Name = "Login";
+            Text = "Login";
             Load += Form4_Load;
             ResumeLayout(false);
             PerformLayout();
@@ -116,5 +150,8 @@
         private TextBox textBox2;
         private Label label2;
         private Label label3;
+        private Label label4;
+        private Button button2;
+        private CheckBox checkBox1;
     }
 }

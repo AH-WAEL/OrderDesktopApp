@@ -17,8 +17,6 @@ namespace desktopAPI
         {
             var logDirectory = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\Logs"));
             Directory.CreateDirectory(logDirectory);
-            MessageBox.Show("Logging initialized" + logDirectory);
-
             // Configure Serilog with structured logging
             _logger = new LoggerConfiguration()
                 .WriteTo.File(

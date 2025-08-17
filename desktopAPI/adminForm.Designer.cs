@@ -1,6 +1,6 @@
 ﻿namespace desktopAPI
 {
-    partial class Form3
+    partial class adminForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,35 +28,45 @@
         /// </summary>
         private void InitializeComponent()
         {
-            dataGridView1 = new DataGridView();
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
+            button1 = new Button();
+            button2 = new Button();
             SuspendLayout();
             // 
-            // dataGridView1
+            // button1
             // 
-            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Location = new Point(0, 0);
-            dataGridView1.Name = "dataGridView1";
-            dataGridView1.RowHeadersWidth = 51;
-            dataGridView1.Size = new Size(800, 452);
-            dataGridView1.TabIndex = 0;
-            dataGridView1.CellContentClick += dataGridView1_CellContentClick;
+            button1.Location = new Point(228, 58);
+            button1.Name = "button1";
+            button1.Size = new Size(139, 29);
+            button1.TabIndex = 0;
+            button1.Text = "Edit Products";
+            button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click;
             // 
-            // Form3
+            // button2
+            // 
+            button2.Location = new Point(228, 141);
+            button2.Name = "button2";
+            button2.Size = new Size(139, 29);
+            button2.TabIndex = 1;
+            button2.Text = "Add Users";
+            button2.UseVisualStyleBackColor = true;
+            // 
+            // adminForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
-            Controls.Add(dataGridView1);
-            Name = "Form3";
-            Text = "Live Feed";
-            Load += Form3_Load;
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
+            Controls.Add(button2);
+            Controls.Add(button1);
+            Name = "adminForm";
+            Text = "adminForm";
+            Load += adminForm_Load;
             ResumeLayout(false);
         }
 
         #endregion
 
-        private DataGridView dataGridView1;
+        private Button button1;
+        private Button button2;
     }
 }

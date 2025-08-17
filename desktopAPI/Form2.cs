@@ -14,12 +14,13 @@ namespace desktopAPI
     public partial class Form2 : Form
     {
         private string id;
-        private HttpClient client = new HttpClient();        public Form2(string ID)
+        private HttpClient client = new HttpClient(); 
+        public Form2(string ID)
         {
             InitializeComponent();
             client.BaseAddress = new Uri("http://localhost:8080/api/");
             id = ID;
-            
+
             if (int.TryParse(ID, out int orderId))
             {
                 Logging.LogUserAction("Navigation", "Form2 (Edit Order) opened", $"Editing order ID: {orderId}");
@@ -33,12 +34,13 @@ namespace desktopAPI
         private void label1_Click(object sender, EventArgs e)
         {
 
-        }        private async void button1_Click(object sender, EventArgs e)
+        }
+        private async void button1_Click(object sender, EventArgs e)
         {
             if (int.TryParse(id, out int ID))
             {
                 Logging.LogUserAction("API", "Update Order button clicked", $"Attempting to update order ID: {ID}");
-                
+
                 if (string.IsNullOrWhiteSpace(textBox1.Text) || string.IsNullOrWhiteSpace(textBox2.Text) || string.IsNullOrWhiteSpace(textBox3.Text))
                 {
                     MessageBox.Show("Please enter all the fields");
@@ -48,20 +50,20 @@ namespace desktopAPI
                 try
                 {
 
-                    var Orders = new order
+                    var Orders = new Order
                     {
                         Item = textBox1.Text,
                         Quantity = int.Parse(textBox2.Text),
                         OrderDate = DateTime.Now,
                         TotalPrice = decimal.Parse(textBox3.Text)
                     };
-                    
+
                     Logging.LogUserAction("API", "Sending update request", $"Order ID: {ID}, Item: {Orders.Item}, Quantity: {Orders.Quantity}, Price: {Orders.TotalPrice}");
-                    
+
                     var updateResponse = await client.PutAsJsonAsync($"order/{ID}", Orders);
                     if (updateResponse.IsSuccessStatusCode)
                     {
-                        dataGridView1.DataSource = await client.GetFromJsonAsync<List<order>>("order");
+                        dataGridView1.DataSource = await client.GetFromJsonAsync<List<Order>>("order");
                         Logging.LogUserAction("API", "Update Order successful", $"Order ID {ID} updated successfully");
                         MessageBox.Show("Order updated successfully!");
                     }
@@ -71,7 +73,8 @@ namespace desktopAPI
                         Logging.LogWarning("API", "Update Order failed", $"Order ID {ID}: {updateResponse.ReasonPhrase}");
                     }
                 }
-                catch (Exception ex) {
+                catch (Exception ex)
+                {
                     MessageBox.Show("An error occurred: " + ex.Message);
                     Logging.LogError("API", "Update Order error", ex, $"Order ID {ID}");
                 }
@@ -79,7 +82,7 @@ namespace desktopAPI
             else
             {
                 Logging.LogUserAction("API", "Create Order button clicked", "Attempting to create new order");
-                
+
                 if (string.IsNullOrWhiteSpace(textBox1.Text) || string.IsNullOrWhiteSpace(textBox2.Text) || string.IsNullOrWhiteSpace(textBox3.Text))
                 {
 
@@ -89,8 +92,9 @@ namespace desktopAPI
                 }
                 try
                 {
-                    var order = new order
+                    var order = new Order
                     {
+                        
                         Item = textBox1.Text,
                         Quantity = int.Parse(textBox2.Text),
                         OrderDate = DateTime.Now,
@@ -103,7 +107,7 @@ namespace desktopAPI
 
                     if (response.IsSuccessStatusCode)
                     {
-                        dataGridView1.DataSource = await client.GetFromJsonAsync<List<order>>("order");
+                        dataGridView1.DataSource = await client.GetFromJsonAsync<List<Order>>("order");
                         Logging.LogUserAction("API", "Create Order successful", $"New order created: {order.Item}");
                         MessageBox.Show("Order created successfully!");
                     }
@@ -132,6 +136,11 @@ namespace desktopAPI
             {
                 Logging.LogUserAction("Navigation", "Form2 (Create Order) closing", "Create order form closing");
             }
+        }
+
+        private void Form2_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

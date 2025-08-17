@@ -122,7 +122,8 @@
             Controls.Add(textBox2);
             Controls.Add(textBox1);
             Name = "Form2";
-            Text = "Form2";
+            Text = "Create/Update";
+            Load += Form2_Load;
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             ResumeLayout(false);
             PerformLayout();
