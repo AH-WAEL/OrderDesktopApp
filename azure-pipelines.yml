@@ -13,8 +13,8 @@ trigger:
     - 'Product api/**'
 
 pool:
-  vmImage: 'windows-latest'
-
+  name: agent1
+  
 variables:
   solution: '**/*.sln'
   buildPlatform: 'Any CPU'
