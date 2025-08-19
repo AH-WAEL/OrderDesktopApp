@@ -98,7 +98,7 @@ jobs:
     inputs:
       targetType: 'inline'
       script: |
-        DEPLOY_PATH= "/opt/productapi"
+        DEPLOY_PATH="/opt/productapi"
 
         # Create deployment directory
         sudo mkdir -p "$DEPLOY_PATH"
@@ -108,7 +108,7 @@ jobs:
         sudo unzip -o *.zip -d "$DEPLOY_PATH"
         
         # Set permissions
-        sudo chown -R $(whoami):$(whoami) $(deployPath)
+        sudo chown -R $(whoami):$(whoami) "$DEPLOY_PATH"
         sudo chmod +x "$DEPLOY_PATH"/Productapi
         
         echo "Application deployed to $DEPLOY_PATH"
@@ -119,22 +119,23 @@ jobs:
       targetType: 'inline'
       script: |
 
-        DEPLOY_PATH= "/opt/productapi"
+        DEPLOY_PATH="/opt/productapi"
 
         cd "$DEPLOY_PATH"
         
         # Start the application in background
-        nohup sudo dotnet ./Productapi.dll --urls="http://0.0.0.0:5000" > /var/log/productapi.log 2>&1 &
+        LOG_PATH="$DEPLOY_PATH/productapi.log"
+        nohup sudo dotnet ./Productapi.dll --urls="http://0.0.0.0:7043" > "$LOG_PATH" 2>&1 &
         
         # Wait a moment and check if it started
         sleep 5
         if pgrep -f "Productapi" > /dev/null; then
           echo "Application started successfully"
           echo "Process ID: $(pgrep -f "Productapi")"
-          echo "Application should be accessible on port 5000"
+          echo "Application should be accessible on port 7043"
         else
           echo "Failed to start application"
-          echo "Check logs: tail /var/log/productapi.log"
+          echo "Check logs: tail -n 50 $LOG_PATH"
           exit 1
         fi
 
