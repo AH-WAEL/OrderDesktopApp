@@ -13,55 +13,125 @@ trigger:
 
 pr: none
 
-pool:
-  name: agent1
-  
 variables:
   buildConfiguration: 'Release'
   projectPath: 'Product api'
 
-steps:
-- task: UseDotNet@2
-  displayName: 'Use .NET 8.0'
-  inputs:
-    packageType: 'sdk'
-    version: '8.0.x'
-    installationPath: $(Agent.ToolsDirectory)/dotnet
+jobs:
+- job: Build
+  displayName: 'Build and Test'
+  pool:
+    name: agent1
+  
+  steps:
+  - task: UseDotNet@2
+    displayName: 'Use .NET 8.0'
+    inputs:
+      packageType: 'sdk'
+      version: '8.0.x'
+      installationPath: $(Agent.ToolsDirectory)/dotnet
 
-- task: DotNetCoreCLI@2
-  displayName: 'Restore NuGet packages'
-  inputs:
-    command: 'restore'
-    projects: '$(projectPath)/**/*.csproj'
-    feedsToUse: 'select'
+  - task: DotNetCoreCLI@2
+    displayName: 'Restore NuGet packages'
+    inputs:
+      command: 'restore'
+      projects: '$(projectPath)/**/*.csproj'
+      feedsToUse: 'select'
 
-- task: DotNetCoreCLI@2
-  displayName: 'Build Product API'
-  inputs:
-    command: 'build'
-    projects: '$(projectPath)/**/*.csproj'
-    arguments: '--configuration $(buildConfiguration) --no-restore'
+  - task: DotNetCoreCLI@2
+    displayName: 'Build Product API'
+    inputs:
+      command: 'build'
+      projects: '$(projectPath)/**/*.csproj'
+      arguments: '--configuration $(buildConfiguration) --no-restore'
 
-# Uncomment when you have tests
-#- task: DotNetCoreCLI@2
-#  displayName: 'Run tests'
-#  inputs:
-#    command: 'test'
-#    projects: '$(projectPath)/**/*[Tt]ests/*.csproj'
-#    arguments: '--configuration $(buildConfiguration) --no-build'
-#  continueOnError: true
+  # Uncomment when you have tests
+  #- task: DotNetCoreCLI@2
+  #  displayName: 'Run tests'
+  #  inputs:
+  #    command: 'test'
+  #    projects: '$(projectPath)/**/*[Tt]ests/*.csproj'
+  #    arguments: '--configuration $(buildConfiguration) --no-build'
+  #  continueOnError: true
 
-- task: DotNetCoreCLI@2
-  displayName: 'Publish Product API'
-  inputs:
-    command: 'publish'
-    publishWebProjects: false
-    projects: 'Product api/Productapi.csproj'
-    arguments: '--configuration $(buildConfiguration) --output "$(Build.ArtifactStagingDirectory)" --no-restore'
-    zipAfterPublish: true
+  - task: DotNetCoreCLI@2
+    displayName: 'Publish Product API'
+    inputs:
+      command: 'publish'
+      publishWebProjects: false
+      projects: 'Product api/Productapi.csproj'
+      arguments: '--configuration $(buildConfiguration) --output "$(Build.ArtifactStagingDirectory)" --no-restore'
+      zipAfterPublish: true
 
-- task: PublishBuildArtifacts@1
-  displayName: 'Publish Build Artifacts'
-  inputs:
-    pathToPublish: '$(Build.ArtifactStagingDirectory)'
-    artifactName: 'ProductAPI'
+  - task: PublishBuildArtifacts@1
+    displayName: 'Publish Build Artifacts'
+    inputs:
+      pathToPublish: '$(Build.ArtifactStagingDirectory)'
+      artifactName: 'ProductAPI'
+
+- job: Deploy
+  displayName: 'Deploy to Local Server'
+  dependsOn: Build
+  condition: succeeded()
+  pool:
+    name: agent1
+  steps:
+  - task: DownloadBuildArtifacts@1
+    displayName: 'Download Build Artifacts'
+    inputs:
+      buildType: 'current'
+      downloadType: 'single'
+      artifactName: 'ProductAPI'
+      downloadPath: '$(System.ArtifactsDirectory)'
+
+  - task: Bash@3
+    displayName: 'Stop existing service (if running)'
+    inputs:
+      targetType: 'inline'
+      script: |
+        sudo pkill -f "Productapi" || true
+        sudo systemctl stop productapi || true
+    continueOnError: true
+
+  - task: Bash@3
+    displayName: 'Deploy Application'
+    inputs:
+      targetType: 'inline'
+      script: |
+        # Create deployment directory
+        sudo mkdir -p $(deployPath)
+        
+        # Extract and copy files
+        cd $(System.ArtifactsDirectory)/ProductAPI
+        sudo unzip -o *.zip -d $(deployPath)
+        
+        # Set permissions
+        sudo chown -R $(whoami):$(whoami) $(deployPath)
+        sudo chmod +x $(deployPath)/Productapi
+        
+        echo "Application deployed to $(deployPath)"
+
+  - task: Bash@3
+    displayName: 'Start Application'
+    inputs:
+      targetType: 'inline'
+      script: |
+        cd $(deployPath)
+        
+        # Start the application in background
+        nohup sudo dotnet ./Productapi.dll --urls="http://0.0.0.0:5000" > /var/log/productapi.log 2>&1 &
+        
+        # Wait a moment and check if it started
+        sleep 5
+        if pgrep -f "Productapi" > /dev/null; then
+          echo "Application started successfully"
+          echo "Process ID: $(pgrep -f "Productapi")"
+          echo "Application should be accessible on port 5000"
+        else
+          echo "Failed to start application"
+          echo "Check logs: tail /var/log/productapi.log"
+          exit 1
+        fi
+
+
+      
