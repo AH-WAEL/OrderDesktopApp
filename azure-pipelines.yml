@@ -60,7 +60,7 @@ jobs:
       command: 'publish'
       publishWebProjects: false
       projects: 'Product api/Productapi.csproj'
-      arguments: '--configuration $(buildConfiguration) --output "$(Build.ArtifactStagingDirectory)" --no-restore'
+      arguments: '--configuration $(buildConfiguration) --runtime linux-x64 --self-contained false --output "$(Build.ArtifactStagingDirectory)" --no-restore'
       zipAfterPublish: true
 
   - task: PublishBuildArtifacts@1
@@ -114,6 +114,8 @@ jobs:
         # Extract and copy files
         cd $(System.ArtifactsDirectory)/ProductAPI
         sudo unzip -o *.zip -d "$DEPLOY_PATH"
+        sudo chown -R $(whoami):$(whoami) "$DEPLOY_PATH"
+        sudo chmod -R 755 "$DEPLOY_PATH"
         
         # Set permissions
         sudo chown -R $(whoami):$(whoami) "$DEPLOY_PATH"
