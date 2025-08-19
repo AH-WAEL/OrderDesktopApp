@@ -76,6 +76,14 @@ jobs:
   pool:
     name: agent1
   steps:
+
+  - task: Bash@3
+    displayName: 'Clean artifact folder'
+    inputs:
+      targetType: 'inline'
+      script: |
+        sudo rm -rf $(System.ArtifactsDirectory)/ProductAPI
+
   - task: DownloadBuildArtifacts@1
     displayName: 'Download Build Artifacts'
     inputs:
