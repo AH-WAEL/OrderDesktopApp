@@ -98,25 +98,30 @@ jobs:
     inputs:
       targetType: 'inline'
       script: |
+        DEPLOY_PATH= "/opt/productapi"
+
         # Create deployment directory
-        sudo mkdir -p $(deployPath)
+        sudo mkdir -p "$DEPLOY_PATH"
         
         # Extract and copy files
         cd $(System.ArtifactsDirectory)/ProductAPI
-        sudo unzip -o *.zip -d $(deployPath)
+        sudo unzip -o *.zip -d "$DEPLOY_PATH"
         
         # Set permissions
         sudo chown -R $(whoami):$(whoami) $(deployPath)
-        sudo chmod +x $(deployPath)/Productapi
+        sudo chmod +x "$DEPLOY_PATH"/Productapi
         
-        echo "Application deployed to $(deployPath)"
+        echo "Application deployed to $DEPLOY_PATH"
 
   - task: Bash@3
     displayName: 'Start Application'
     inputs:
       targetType: 'inline'
       script: |
-        cd $(deployPath)
+
+        DEPLOY_PATH= "/opt/productapi"
+
+        cd "$DEPLOY_PATH"
         
         # Start the application in background
         nohup sudo dotnet ./Productapi.dll --urls="http://0.0.0.0:5000" > /var/log/productapi.log 2>&1 &
