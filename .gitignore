@@ -1,5 +1,6 @@
 # Visual Studio
 .vs/
+.vscode/
 bin/
 obj/
 *.user
@@ -27,6 +28,17 @@ packages/
 # Logs
 *.log
 Logs/
+logs_from_rabbit.log
+
+# Secrets and local config
+appsettings.Local.json
+appsettings.*.Local.json
+.env
+.env.*
+secrets*.json
+*.pfx
+*.pem
+*.key
 
 # User-specific files
 *.rsuser
@@ -34,3 +46,8 @@ Logs/
 *.user
 *.userosscache
 *.sln.docstates
+*.orig
+
+# OS files
+.DS_Store
+Thumbs.db

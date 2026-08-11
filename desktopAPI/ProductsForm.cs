@@ -29,7 +29,7 @@ namespace desktopAPI
 
             client = new HttpClient(authDelegateHandler);
 
-            client.BaseAddress = new Uri("https://localhost:7043/api/");
+            client.BaseAddress = new Uri("http://4.251.193.5:7043/api/");
             Logging.LogUserAction("Navigation", "Products Form opened", "Products form initialized");
         }
 

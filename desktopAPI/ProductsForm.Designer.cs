@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             button7 = new Button();
-            button6 = new Button();
             label1 = new Label();
             textBox1 = new TextBox();
             dataGridView1 = new DataGridView();
@@ -50,15 +49,6 @@
             button7.Text = "Logout";
             button7.UseVisualStyleBackColor = true;
             button7.Click += button7_Click;
-            // 
-            // button6
-            // 
-            button6.Location = new Point(580, 390);
-            button6.Name = "button6";
-            button6.Size = new Size(148, 48);
-            button6.TabIndex = 18;
-            button6.Text = "Live Feed";
-            button6.UseVisualStyleBackColor = true;
             // 
             // label1
             // 
@@ -141,7 +131,6 @@
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
             Controls.Add(button7);
-            Controls.Add(button6);
             Controls.Add(label1);
             Controls.Add(textBox1);
             Controls.Add(dataGridView1);
@@ -161,7 +150,6 @@
         #endregion
 
         private Button button7;
-        private Button button6;
         private Label label1;
         private TextBox textBox1;
         private DataGridView dataGridView1;

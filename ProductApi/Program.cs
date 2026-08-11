@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Text;
 using productapi;
 using Microsoft.EntityFrameworkCore;
+using Product_api.Services.caching;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,6 +15,11 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddStackExchangeRedisCache(options =>
+{
+    options.Configuration = builder.Configuration.GetConnectionString("Redis");
+    options.InstanceName = "Products";
+});
 
 builder.Services.AddSwaggerGen(c =>
 {
@@ -62,6 +68,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 builder.Services.AddDbContext<ProductDBcontext>(options =>
         options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+builder.Services.AddScoped<IRedisCacheService, RedisCachingServices>();
 builder.Services.AddAuthorization();
 
 var app = builder.Build();

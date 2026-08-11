@@ -5,13 +5,13 @@ VisualStudioVersion = 17.11.35312.102
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "desktopAPI", "desktopAPI\desktopAPI.csproj", "{44D6DBAF-392B-41D6-A071-A2F7A16C64A6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "reciever", "reciever\reciever.csproj", "{28A12C5C-E60A-4A56-892E-E5B72F95F390}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Receiver", "Receiver\Receiver.csproj", "{28A12C5C-E60A-4A56-892E-E5B72F95F390}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "first", "..\first\first\first.csproj", "{94EAFC33-EC4B-6614-72E0-87181D0DE7A6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthWebapi", "AuthWebapi\AuthWebapi.csproj", "{052F3FB3-D284-3F88-9233-BC3C9EADFF77}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthApi", "AuthApi\AuthApi.csproj", "{052F3FB3-D284-3F88-9233-BC3C9EADFF77}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Productapi", "Product api\Productapi.csproj", "{98A1E9E3-A550-4279-9CF9-CC151C3AA702}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProductApi", "ProductApi\ProductApi.csproj", "{98A1E9E3-A550-4279-9CF9-CC151C3AA702}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

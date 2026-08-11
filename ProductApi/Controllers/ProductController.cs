@@ -2,16 +2,18 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Product_api.Data;
+using Product_api.Services.caching;
 using productapi;
 
 namespace first.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    //[Authorize(Roles = "Admin")]
-    public class ProductController(ProductDBcontext context) : ControllerBase
+    [Authorize(Roles = "Admin")]
+    public class ProductController(ProductDBcontext context , IRedisCacheService cache) : ControllerBase
     {
         private readonly ProductDBcontext _context = context;
+        private readonly IRedisCacheService _cache = cache;
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Product>>> GetAllProducts()
